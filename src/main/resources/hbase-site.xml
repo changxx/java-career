@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property>
+		<name>hbase.zookeeper.quorum</name>
+		<value>node31, node37</value>
+		<!-- <value>tiger01</value>  -->
+		<!--<value>Master.Hadoop</value> -->
+	</property>
+	<property skipInDoc="true">
+		<name>hbase.defaults.for.version</name>
+		<value>0.94.21</value>
+	</property>
+</configuration>
