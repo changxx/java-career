@@ -3,8 +3,6 @@ package com.changxx.practice.annotation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
-
 @MyAnnotation(hello = "beijing", world = "shanghai", array = {}, style = Integer.class)
 public class MyTest {
 
