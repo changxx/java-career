@@ -16,7 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public class HttpClientTest {
 
-    private final static String JONE_LIST_SYSTEM_URL = "http://jone.jd.com/production_api/list_system";
+    private final static String JONE_LIST_SYSTEM_URL = "http://xxxxx/production_api/list_system";
 
     private final static String TOKEN                = "26FFE547-B28C-499A-8E9B-PRODUC";
 

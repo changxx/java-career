@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * joneSystem
- * @author J-ONE
- * @since 2014-06-10
  */
 public class JoneSystem implements Serializable {
 
@@ -36,13 +33,15 @@ public class JoneSystem implements Serializable {
         this(id, null, parentId, productionId, null, null, null, null, null, null, null, null, null);
     }
 
-    public JoneSystem(Integer id, String name, Integer level, String levelName, String leader, String leaderName, String firstBranch, String secondBranch, Integer privilege,
-            String remark) {
-        this(id, name, null, null, level, levelName, leader, leaderName, firstBranch, secondBranch, privilege, remark, null);
+    public JoneSystem(Integer id, String name, Integer level, String levelName, String leader,
+            String leaderName, String firstBranch, String secondBranch, Integer privilege, String remark) {
+        this(id, name, null, null, level, levelName, leader, leaderName, firstBranch, secondBranch,
+                privilege, remark, null);
     }
 
-    public JoneSystem(Integer id, String name, Integer parentId, Integer productionId, Integer level, String levelName, String leader, String leaderName, String firstBranch,
-            String secondBranch, Integer privilege, String remark, Date syncTime) {
+    public JoneSystem(Integer id, String name, Integer parentId, Integer productionId, Integer level,
+            String levelName, String leader, String leaderName, String firstBranch, String secondBranch,
+            Integer privilege, String remark, Date syncTime) {
         super();
         this.id = id;
         this.name = name;

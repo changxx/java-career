@@ -124,10 +124,16 @@ public class RedisTest {
         jedis.rpush("a", "1");
         jedis.lpush("a", "6");
         jedis.lpush("a", "3");
-        jedis.lpush("a", "9");
+        jedis.rpush("a", "9");
         System.out.println(jedis.lrange("a", 0, -1));// [9, 3, 6, 1]
         System.out.println(jedis.sort("a")); // [1, 3, 6, 9] //输入排序后结果
         System.out.println(jedis.lrange("a", 0, -1));
+    }
+
+    @Test
+    public void testRedisPool() {
+        RedisUtil.getJedis().set("newname", "中文");
+        System.out.println(RedisUtil.getJedis().get("newname"));
     }
 
 }

@@ -10,8 +10,6 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
- * @author xiebiao
- * @email xiebiao@jd.com
  */
 public class JSONUtils {
 
