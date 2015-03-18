@@ -1,4 +1,4 @@
-package com.changxx.practice.thread;
+package com.changxx.practice.thread.queue;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
