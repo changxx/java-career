@@ -22,4 +22,14 @@ public class A {
     static {
         System.out.println("A2");
     }
+    
+    public static void main(String[] args) {
+		int num =100;
+		if(num++>100);
+		System.out.println(num);
+		{
+			num=200;
+		}
+		System.out.println(num);
+	}
 }
