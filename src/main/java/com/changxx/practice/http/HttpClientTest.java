@@ -1,12 +1,21 @@
 package com.changxx.practice.http;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 /**
  * @author changxiangxiang
@@ -16,44 +25,28 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public class HttpClientTest {
 
-    private final static String JONE_LIST_SYSTEM_URL = "http://xxxxx/production_api/list_system";
-
-    private final static String TOKEN                = "26FFE547-B28C-499A-8E9B-PRODUC";
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClientProtocolException, IOException {
 
         HttpClient httpClient = HttpClientSupport.getHttpClient();
 
-        HttpPost post = new HttpPost(JONE_LIST_SYSTEM_URL);
-        post.setHeader("token", TOKEN);
+        HttpPost post = new HttpPost("http://passport.mop.com/");
 
-        List<BasicNameValuePair> params = HttpClientTest.getParams(1, 20, null);
+        List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        params.add(new BasicNameValuePair("loginName", "joymall"));
+        params.add(new BasicNameValuePair("loginPasswd", "981188321chang"));
+
+        post.setEntity(new UrlEncodedFormEntity(params));
 
         HttpPostRequest request = new HttpPostRequest(httpClient, post);
-        String json = request.request(params);
 
-        System.out.println(json);
+        // 创建响应处理器处理服务器响应内容
+        ResponseHandler<String> responseHandler = new ss();
+        // 执行请求并获取结果
+        String responseBody = httpClient.execute(post, responseHandler);
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
+        System.out.println("----------------------------------------");
 
-        Result result = JSONUtils.jsonToObject(json, Result.class);
-
-        for (JoneSystem system : result.getBody().getData().getSystem()) {
-            System.out.println("level" + system.getLevel());
-            System.out.println("level_name" + system.getLevelName());
-        }
-    }
-
-    private static List<BasicNameValuePair> getParams(Integer page, Integer pageSize, List<Integer> ids) {
-        List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-        if (null != page) {
-            params.add(new BasicNameValuePair("page", String.valueOf(page)));
-        }
-        if (null != pageSize) {
-            params.add(new BasicNameValuePair("page_size", String.valueOf(pageSize)));
-        }
-        if (ids != null && ids.size() > 0) {
-            params.add(new BasicNameValuePair("id", Arrays.toString(ids.toArray(new Integer[] { ids.size() }))));
-        }
-        return params;
     }
 
 }
