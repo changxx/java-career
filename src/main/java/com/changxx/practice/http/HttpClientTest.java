@@ -1,21 +1,18 @@
 package com.changxx.practice.http;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.junit.Test;
 
 /**
  * @author changxiangxiang
@@ -24,29 +21,53 @@ import org.apache.http.util.EntityUtils;
  * @since sprint2
  */
 public class HttpClientTest {
+	
+	@Test
+	public void test1() throws ClientProtocolException, IOException{
+		HttpClient httpClient = HttpClientSupport.getHttpClient();
 
-    public static void main(String[] args) throws ClientProtocolException, IOException {
+		HttpPost post = new HttpPost("http://passport.mop.com/");
 
-        HttpClient httpClient = HttpClientSupport.getHttpClient();
+		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+		params.add(new BasicNameValuePair("loginName", "joymall"));
+		params.add(new BasicNameValuePair("loginPasswd", "981188321chang"));
 
-        HttpPost post = new HttpPost("http://passport.mop.com/");
+		post.setEntity(new UrlEncodedFormEntity(params));
 
-        List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-        params.add(new BasicNameValuePair("loginName", "joymall"));
-        params.add(new BasicNameValuePair("loginPasswd", "981188321chang"));
+		HttpPostRequest request = new HttpPostRequest(httpClient, post);
 
-        post.setEntity(new UrlEncodedFormEntity(params));
+		// ClientContext.COOKIE_STORE
 
-        HttpPostRequest request = new HttpPostRequest(httpClient, post);
+		// 创建响应处理器处理服务器响应内容
+		ResponseHandler<String> responseHandler = new CustomerBasicResponseHandler();
+		// 执行请求并获取结果
+		String responseBody = httpClient.execute(post, responseHandler);
+		System.out.println("----------------------------------------");
+		System.out.println(responseBody);
+		System.out.println("----------------------------------------");
 
-        // 创建响应处理器处理服务器响应内容
-        ResponseHandler<String> responseHandler = new ss();
-        // 执行请求并获取结果
-        String responseBody = httpClient.execute(post, responseHandler);
-        System.out.println("----------------------------------------");
-        System.out.println(responseBody);
-        System.out.println("----------------------------------------");
+	}
 
-    }
+	@Test
+	public void test2() throws ClientProtocolException, IOException{
+		HttpClient httpClient = HttpClientSupport.getHttpClient();
+
+		HttpPost post = new HttpPost("http://hi.mop.com/");
+		
+		post.addHeader("Cookie", "_ml=751033200452421839621");
+
+		HttpPostRequest request = new HttpPostRequest(httpClient, post);
+
+		// ClientContext.COOKIE_STORE
+
+		// 创建响应处理器处理服务器响应内容
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		// 执行请求并获取结果
+		String responseBody = httpClient.execute(post, responseHandler);
+		System.out.println("----------------------------------------");
+		System.out.println(responseBody);
+		System.out.println("----------------------------------------");
+
+	}
 
 }
