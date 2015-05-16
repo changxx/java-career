@@ -1,2 +1,7 @@
-# practice
-一堆学习笔记
+java base
+desigin patterns
+hbase
+log4j
+mybatis
+redis
+thread
