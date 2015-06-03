@@ -30,6 +30,8 @@ public class MyTest {
             System.out.println(hello + ", " + world);
             System.out.println(myAnnotation.array().length);
             System.out.println(myAnnotation.style());
+
+
         }
 
         Annotation[] annotations = method.getAnnotations();
