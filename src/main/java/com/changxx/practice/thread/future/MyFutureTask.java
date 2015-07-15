@@ -22,7 +22,6 @@ public class MyFutureTask {
      * @throws ExecutionException
      */
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-
         final ExecutorService exe = Executors.newFixedThreadPool(3);
         Callable<String> call = new Callable<String>() {
 
