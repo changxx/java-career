@@ -14,7 +14,7 @@ public class SocketChannelTest {
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.connect(new InetSocketAddress("127.0.0.1", 8050));
 
-        String newData = "New String to write to file..." + System.currentTimeMillis();
+        String newData = "get socket string" + System.currentTimeMillis();
 
         ByteBuffer buf = ByteBuffer.allocate(48);
         buf.clear();
