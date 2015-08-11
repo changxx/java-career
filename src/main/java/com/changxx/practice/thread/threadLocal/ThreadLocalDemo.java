@@ -6,7 +6,7 @@ package com.changxx.practice.thread.threadLocal;
  * @description
  * @since sprint2
  */
-public class ThreadLocalDeom implements Runnable {
+public class ThreadLocalDemo implements Runnable {
 
     private ThreadLocal<Student> local = new ThreadLocal<Student>();
 
@@ -20,7 +20,7 @@ public class ThreadLocalDeom implements Runnable {
     }
 
     public static void main(String[] args) {
-        Runnable runnable = new ThreadLocalDeom();
+        Runnable runnable = new ThreadLocalDemo();
 
         Thread a = new Thread(runnable);
         Thread b = new Thread(runnable);
