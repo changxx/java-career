@@ -31,13 +31,13 @@ public class HttpClientTest {
         HttpPost post = new HttpPost("http://passport.mop.com/");
 
         List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-        params.add(new BasicNameValuePair("appid", "jd_m_chongzhi"));
+        params.add(new BasicNameValuePair("appid", "xx"));
         params.add(new BasicNameValuePair("pin", "翔宇vs天下"));
         params.add(new BasicNameValuePair("orderId", "10095405731"));
         params.add(new BasicNameValuePair("orderType", "37"));
         params.add(new BasicNameValuePair("payAmount", "0.01"));
         params.add(new BasicNameValuePair("timestamp", String.valueOf(System.currentTimeMillis())));
-        params.add(new BasicNameValuePair("sign", "jd_m_chongzhi"));
+        params.add(new BasicNameValuePair("sign", "xx"));
 
         post.addHeader("Content-Type", "application/json");
 
