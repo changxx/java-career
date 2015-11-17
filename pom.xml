@@ -101,12 +101,6 @@
         </dependency>
 
         <dependency>
-            <groupId>image-common</groupId>
-            <artifactId>image-common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.sonatype.sisu.inject</groupId>
             <artifactId>cglib</artifactId>
             <version>2.2.3</version>
@@ -123,6 +117,12 @@
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
             <version>3.0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.20.0-GA</version>
         </dependency>
     </dependencies>
 
