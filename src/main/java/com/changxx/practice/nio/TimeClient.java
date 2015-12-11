@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -105,6 +107,8 @@ public class TimeClient implements Runnable {
                     readBuffer.get(bytes);
                     String body = new String(bytes, "UTF-8");
                     System.out.println("Now is : " + body);
+
+                    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss").format(new Date()));
                     this.stop = true;
                 } else if (readBytes < 0) {
                     key.cancel();

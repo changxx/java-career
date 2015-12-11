@@ -7,6 +7,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -105,10 +107,12 @@ public class TimeServer implements Runnable {
 
     private void doWrite(SocketChannel channel, String response) throws IOException {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
+            // 同时接受到两个请求，第一次会阻塞第二次的
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss").format(new Date()));
         if (response != null && response.trim().length() > 0) {
             byte[] bytes = response.getBytes();
             ByteBuffer writeByffer = ByteBuffer.allocate(bytes.length);
