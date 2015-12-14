@@ -22,7 +22,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import java.io.IOException;
 import java.util.Map;
 
-import com.phei.netty.protocol.netty.struct.NettyMessage;
+import com.changxx.phei.netty.protocol.netty.struct.NettyMessage;
 
 /**
  * @author Lilinfeng

@@ -19,8 +19,8 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
-import com.phei.netty.codec.pojo.SubscribeReq;
-import com.phei.netty.codec.pojo.SubscribeResp;
+import com.changxx.phei.netty.codec.pojo.SubscribeReq;
+import com.changxx.phei.netty.codec.pojo.SubscribeResp;
 
 /**
  * @author lilinfeng

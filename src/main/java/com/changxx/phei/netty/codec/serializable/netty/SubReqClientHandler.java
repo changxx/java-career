@@ -18,7 +18,7 @@ package com.changxx.phei.netty.codec.serializable.netty;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
-import com.phei.netty.codec.pojo.SubscribeReq;
+import com.changxx.phei.netty.codec.pojo.SubscribeReq;
 
 /**
  * @author lilinfeng

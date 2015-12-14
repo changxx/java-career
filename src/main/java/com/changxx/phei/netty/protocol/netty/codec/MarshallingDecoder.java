@@ -18,6 +18,7 @@ package com.changxx.phei.netty.protocol.netty.codec;
 import io.netty.buffer.ByteBuf;
 
 import java.io.IOException;
+import java.io.StreamCorruptedException;
 
 import org.jboss.marshalling.ByteInput;
 import org.jboss.marshalling.Unmarshaller;
