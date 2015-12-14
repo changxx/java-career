@@ -1,9 +1,11 @@
-package com.changxx.practice.serializable;
+package com.changxx.practice.serializable.jdk;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import com.changxx.practice.serializable.Domain;
 
 /**
  * @author changxx on 15-11-25.
