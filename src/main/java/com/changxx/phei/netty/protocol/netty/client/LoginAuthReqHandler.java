@@ -53,6 +53,7 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
                 && message.getHeader().getType() == MessageType.LOGIN_RESP
                 .value()) {
 //	    byte loginResult = (byte) message.getBody();
+            System.out.println(message.getBody().toString().charAt(0));
             byte loginResult = (byte) 0;
             if (loginResult != (byte) 0) {
                 // 握手失败，关闭连接
