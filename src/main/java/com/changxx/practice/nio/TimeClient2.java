@@ -15,7 +15,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class TimeClient2 {
     public static void main(String[] args) {
-        new Thread(new AsyncTimeClientHandler("127.0.0.1", 8080)).start();
+        new Thread(new AsyncTimeClientHandler("127.0.0.1", 8050)).start();
     }
 }
 

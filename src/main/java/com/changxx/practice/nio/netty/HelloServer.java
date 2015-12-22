@@ -14,6 +14,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class HelloServer {
     public void start(int port) throws Exception {
+        // 一个用于服务端接受客户端的连接，一个用于进行SocketChannel的网络读写
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {

@@ -19,7 +19,7 @@ import java.util.concurrent.CountDownLatch;
 public class TimeServer2 {
 
     public static void main(String[] args) {
-        new Thread(new AsyncTimeServerHandler(8080)).start();
+        new Thread(new AsyncTimeServerHandler(8050), "timeserver2").start();
     }
 
 }
