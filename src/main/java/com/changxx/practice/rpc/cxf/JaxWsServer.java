@@ -2,6 +2,9 @@ package com.changxx.practice.rpc.cxf;
 
 import org.apache.cxf.frontend.ServerFactoryBean;
 
+import com.changxx.practice.rpc.HelloService;
+import com.changxx.practice.rpc.HelloServiceImpl;
+
 /**
  * @author changxx on 15-11-8.
  */

@@ -21,13 +21,16 @@ public class SerializableTest {
     public static void main(String[] args) throws Exception {
         ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/home/changxx/1.txt"));
         os.writeObject(new Domain("xxxxx"));
+        os.writeObject(new Domain("changxx"));
 
         os.flush();
         os.close();
 
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("/home/changxx/1.txt"));
         Domain domain = (Domain) in.readObject();
+        Domain domain2 = (Domain) in.readObject();
         System.out.println(domain.getName());
+        System.out.println(domain2.getName());
     }
 
 }
