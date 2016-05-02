@@ -1,14 +1,18 @@
 package com.changxx.practice.redis;
 
+import com.caucho.hessian.io.HessianInput;
+import com.caucho.hessian.io.HessianOutput;
+import org.junit.Before;
+import org.junit.Test;
+import redis.clients.jedis.Jedis;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import redis.clients.jedis.Jedis;
 
 public class RedisTest {
 
@@ -19,6 +23,29 @@ public class RedisTest {
         // 连接redis服务器，192.168.0.100:6379
         jedis = new Jedis("127.0.0.1", 6379);
         // 权限认证
+    }
+
+    @Test
+    public void testWrite() throws IOException {
+        com.changxx.practice.hash.User user = new com.changxx.practice.hash.User();
+        user.setName("x");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        HessianOutput ho = new HessianOutput(os);
+        ho.writeObject(user);
+        jedis.set("user".getBytes(), os.toByteArray());
+
+    }
+
+    @Test
+    public void testRead() throws IOException {
+        byte[] bytes = jedis.get("user".getBytes());
+
+        User user;
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+        HessianInput hi = new HessianInput(is);
+        user = (User) hi.readObject();
+
+        System.out.println(user.toString());
     }
 
     /**
@@ -111,7 +138,7 @@ public class RedisTest {
         jedis.srem("user", "who");
         System.out.println(jedis.smembers("user"));// 获取所有加入的value
         System.out.println(jedis.sismember("user", "who"));// 判断 who
-                                                           // 是否是user集合的元素
+        // 是否是user集合的元素
         System.out.println(jedis.srandmember("user"));
         System.out.println(jedis.scard("user"));// 返回集合的元素个数
     }

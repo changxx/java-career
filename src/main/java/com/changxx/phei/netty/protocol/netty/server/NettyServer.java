@@ -39,7 +39,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 public class NettyServer {
 
     public void bind() throws Exception {
-        // 配置服务端的NIO线程组
+        // 配置服务端的NIO线程组se
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         ServerBootstrap b = new ServerBootstrap();
