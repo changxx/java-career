@@ -17,8 +17,8 @@ import java.io.File;
 public class SearchTest {
 
     public static void main(String[] args) throws Exception {
-        String indexDir = "/home/changxx/develop/lucene/index";
-        SearchTest.search(indexDir, "contents:信息 流程");
+        String indexDir = "/Users/changxx/work/index";
+        SearchTest.search(indexDir, "contents:contents");
     }
 
     public static void search(String indexDir, String q) throws Exception {

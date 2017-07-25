@@ -75,8 +75,8 @@ public class IndexerTest {
     }
 
     public static void main(String[] args) throws Exception {
-        String indexDir = "/home/changxx/develop/lucene/index";
-        String dataDir = "/home/changxx/develop/lucene/data";
+        String indexDir = "/Users/changxx/work/index";
+        String dataDir = "/Users/changxx/work/test_env";
 
         long start = System.currentTimeMillis();
 

@@ -1,6 +1,5 @@
 package com.changxx.practice.http;
 
-import com.changxx.practice.util.MD5Util;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -12,9 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author changxiangxiang
@@ -76,6 +73,13 @@ public class HttpClientTest {
         System.out.println("----------------------------------------");
         System.out.println(responseBody);
         System.out.println("----------------------------------------");
+    }
+
+    @Test
+    public void test3() throws ClientProtocolException, IOException {
+        String content = "{\"Name\": \"kaolat\",\"Container\": \"mp4\",\"Audio\": {\"Codec\": \"aac\"},\"Thumbnail\": {\"Offset\": \"15\"}}";
+        String result = HttpClientSupport.postStream("http://nts.netease.com:8081/presets/create", null);
+        System.out.println(result);
     }
 }
 

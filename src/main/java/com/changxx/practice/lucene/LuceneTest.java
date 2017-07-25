@@ -29,7 +29,7 @@ public class LuceneTest {
     public static void main(String[] args) throws IOException, ParseException {
         // 建立索引
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_44);
-        File file = new File("/lucene");
+        File file = new File("~/lucene");
         Directory index = new SimpleFSDirectory(file);
 
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_44, analyzer);
@@ -75,7 +75,7 @@ public class LuceneTest {
     private static void addDoc(IndexWriter w, String title, String isbn) throws IOException {
         Document doc = new Document();
         doc.add(new TextField("title", title, Field.Store.YES));
-        doc.add(new StringField("isbn", title, Field.Store.YES));
+        doc.add(new StringField("isbn", isbn, Field.Store.YES));
         w.addDocument(doc);
     }
 
