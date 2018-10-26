@@ -15,7 +15,7 @@ public class ZookeeperClient {
         synchronized (ZookeeperClient.class) {
             if (zk == null) {
                 try {
-                    zk = new ZooKeeper("localhost:2181", 2000, null);
+                    zk = new ZooKeeper("kaola-soa-zk1.jd.163.org:2181", 2000, null);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
