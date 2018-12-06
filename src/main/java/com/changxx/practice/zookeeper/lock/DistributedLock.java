@@ -39,17 +39,6 @@ public class DistributedLock {
         ensureExists(root);
     }
 
-    public static void main(String[] args) throws KeeperException, InterruptedException {
-        ZooKeeper zk = ZookeeperClient.getInstance();
-        List<String> childrenNames = zk.getChildren("/kl-tomcat/kaola-mykaola-web", false);
-        for (int i = 0; i < childrenNames.size(); i++) {
-            System.out.println("name:" + childrenNames.get(i));
-            byte[] childrenByte = zk.getData("/kl-tomcat/kaola-mykaola-web/" + childrenNames.get(i), false, null);
-            String str = new String(childrenByte);
-            System.out.println(str);
-        }
-    }
-
     public void lock() throws InterruptedException, KeeperException {
         if (exception != null) {
             throw exception;
