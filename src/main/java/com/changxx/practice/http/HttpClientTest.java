@@ -1,19 +1,28 @@
 package com.changxx.practice.http;
 
 import com.changxx.practice.http.ms.*;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.message.BasicNameValuePair;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import org.joda.time.DateTime;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author changxiangxiang
@@ -56,149 +65,92 @@ public class HttpClientTest {
 
     }
 
-    @Test
-    public void test2() throws ClientProtocolException, IOException {
-        HttpClient httpClient = HttpClientSupport.getHttpClient();
-
-        HttpPost post = new HttpPost("http://hi.mop.com/");
-
-        post.addHeader("Cookie", "_ml=751033200452421839621");
-
-        HttpPostRequest request = new HttpPostRequest(httpClient, post);
-
-        // ClientContext.COOKIE_STORE
-
-        // 创建响应处理器处理服务器响应内容
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        // 执行请求并获取结果
-        String responseBody = httpClient.execute(post, responseHandler);
-        System.out.println("----------------------------------------");
-        System.out.println(responseBody);
-        System.out.println("----------------------------------------");
-    }
-
-    @Test
-    public void test3() throws ClientProtocolException, IOException {
-        String content = "{\"Name\": \"kaolat\",\"Container\": \"mp4\",\"Audio\": {\"Codec\": \"aac\"},\"Thumbnail\": {\"Offset\": \"15\"}}";
-        String result = HttpClientSupport.postStream("http://nts.netease.com:8081/presets/create", null);
-        System.out.println(result);
-    }
-
-    @Test
-    public void testMS() throws Exception {
-        int page = 1;
-        String cookie = "_ntes_nnid=7a2ab2a4395c4e4bd5cea514e9515dbc,1501053535791; _ga=GA1.2.110885681.1499913884; route=e8419becc80413c8bfe2c95400921a8b; NTESwebSI=70DF4359375A2EE718ADA521209D2FE5.hzadg-haitao-dubbo5.server.163.org-8081; CAS_U=CAS_U_ST-31345-rd64hR2yLcFh5wJcA16d";
-        List<AppResult> appResults = new ArrayList<AppResult>();
-        // 有调用的
-        List<AppResult> intInvokes = new ArrayList<AppResult>();
-
-        Application application = this.getApplication(page, cookie);
-
-        if (application != null && application.getPage() != null) {
-            if (application.getPage().getResult() != null) {
-                appResults.addAll(application.getPage().getResult());
-            }
-            if (application.getPage().getTotalPages() > page) {
-                for (int i = page + 1; i <= application.getPage().getTotalPages(); i++) {
-                    Application applicationTemp = this.getApplication(i, cookie);
-                    if (applicationTemp.getPage().getResult() != null) {
-                        appResults.addAll(applicationTemp.getPage().getResult());
-                    }
+    public static void main(String[] args) throws JSONException {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        String s = "";
+        JSONObject jsonObject = new JSONObject(s);
+        JSONObject obj = (JSONObject) ((jsonObject.getJSONObject("result").getJSONArray("lines").get(0)));
+        JSONArray jsonArray = obj.getJSONArray("data");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONArray a = (JSONArray) (jsonArray.get(i));
+                String day = new DateTime(a.get(0)).toString("yyyy-MM-dd");
+                if (a.get(1) == null) {
+                    continue;
                 }
-            }
-        }
-
-        for (AppResult appResult : appResults) {
-            if (!notInvoke(appResult)) {
-                intInvokes.add(appResult);
-            }
-        }
-
-        System.out.println(intInvokes.size());
-
-        for (AppResult appResult : intInvokes) {
-            // 200
-            String str = print(appResult.getName(), 200, "-");
-            System.out.println(str);
-            InteStat inteStat = this.getInterfaceStat(appResult.getName(), cookie);
-            for (MethodStat methodStat : inteStat.getList()) {
-                if (methodStat.getConsumerSuccess() > 0) {
-                    MethodDist methodDist = this.getMethodDist(appResult.getName(), methodStat.getMethod(), cookie);
-                    // 100 20 80
-                    String str1 = print(methodStat.getMethod(), 100, " ") + print(methodStat.getConsumerSuccess() + "", 10, " ") + print(JSONUtils.objectToJson(methodDist.getApps()), 80, " ");
-                    System.out.println(str1);
+                Integer num = (Integer) a.get(1);
+                if (map.get(day) == null) {
+                    map.put(day, num);
+                } else {
+                    map.put(day, num + map.get(day));
                 }
+            } catch (Exception e) {
+
             }
         }
-    }
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + "\t" + entry.getValue());
 
-    private Application getApplication(int page, String cookie) throws Exception {
-        String url = "http://soa.hz.netease.com/manage/service/getServiceListNoGroupversion?p=" + page + "&ps=50&favorite=false&application=haitao-ms";
-        HttpClient httpClient = HttpClientSupport.getHttpClient();
-
-        HttpGet post = new HttpGet(url);
-        post.addHeader("Cookie", cookie);
-
-        // 创建响应处理器处理服务器响应内容
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        // 执行请求并获取结果
-        String body = httpClient.execute(post, responseHandler);
-
-        return JSONUtils.jsonToObject(body, Application.class);
-    }
-
-    private InteStat getInterfaceStat(String inte, String cookie) throws Exception {
-        String url = "http://soa.hz.netease.com/services/ajaxStatistics?service=" + inte + "&p=1&ps=50";
-        HttpClient httpClient = HttpClientSupport.getHttpClient();
-
-        HttpGet post = new HttpGet(url);
-        post.addHeader("Cookie", cookie);
-
-        // 创建响应处理器处理服务器响应内容
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        // 执行请求并获取结果
-        String body = httpClient.execute(post, responseHandler);
-
-        return JSONUtils.jsonToObject(body, InteStat.class);
-    }
-
-    private MethodDist getMethodDist(String inte, String method, String cookie) throws Exception {
-        String url = "http://soa.hz.netease.com/services/method/sourceChart?service=" + inte + "&method=" + method + "&from=1507478400000&to=1507564799000";
-        HttpClient httpClient = HttpClientSupport.getHttpClient();
-
-        HttpGet post = new HttpGet(url);
-        post.addHeader("Cookie", cookie);
-
-        // 创建响应处理器处理服务器响应内容
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        // 执行请求并获取结果
-        String body = httpClient.execute(post, responseHandler);
-
-        return JSONUtils.jsonToObject(body, MethodDist.class);
-    }
-
-    /**
-     * 接口无调用
-     */
-    private boolean notInvoke(AppResult appResult) {
-        if (appResult == null) {
-            return true;
         }
-        if (appResult.getTags() != null) {
-            for (AppTag appTag : appResult.getTags()) {
-                if (appTag.getTagName().equals("无调用")) {
-                    return true;
-                }
+    }
+
+    @Test
+    public void test2() throws ClientProtocolException, IOException, JSONException {
+        HttpClient httpClient = HttpClientSupport.getHttpClient();
+
+        HttpPost post = new HttpPost("http://xxxxxxx/card/queryVipUser");
+
+        String cookie = "";
+
+        post.addHeader("Cookie", cookie);
+        post.addHeader("Content-Type", "application/json;charset=UTF-8");
+        post.addHeader("Accept", "application/json, text/plain, */*");
+
+        List<String> userNames = FileUtils.readLines(new File("/Users/changxx/Downloads/error.txt"));
+
+        for (String userName : userNames) {
+            JSONObject jsonObjec1 = new JSONObject();
+            jsonObjec1.put("userName", userName);
+            jsonObjec1.put("status", 1);
+
+            //设置请求体
+            post.setEntity(new StringEntity(jsonObjec1.toString(), "UTF-8"));
+
+            // 执行请求并获取结果
+            String responseBody1 = httpClient.execute(post, new BasicResponseHandler());
+
+            JSONObject jsonObject = new JSONObject(responseBody1);
+            JSONArray obj = jsonObject.getJSONArray("data");
+            if (obj.length() == 0) {
+                continue;
             }
-        }
-        return false;
-    }
+            String virtualOrderId = ((JSONObject) obj.get(0)).get("virtualOrderId").toString();
+            if (!virtualOrderId.startsWith("rcd")) {
+                System.out.println(virtualOrderId);
+                continue;
+            }
 
-    private String print(String name, int length, String split) {
-        for (int i = 0; i < length - name.length(); i++) {
-            name = name.concat(split);
+            HttpPost post2 = new HttpPost("http://xxxxxx/card/invalidCard");
+
+            post2.addHeader("Cookie", cookie);
+            post2.addHeader("Content-Type", "application/json;charset=UTF-8");
+            post2.addHeader("Accept", "application/json, text/plain, */*");
+
+            JSONObject jsonObject2 = new JSONObject();
+            jsonObject2.put("userName", userName);
+            jsonObject2.put("virtualOrderId", virtualOrderId);
+
+            //设置请求体
+            post2.setEntity(new StringEntity(jsonObject2.toString(), "UTF-8"));
+
+            // 创建响应处理器处理服务器响应内容
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            // 执行请求并获取结果
+            String responseBody = httpClient.execute(post2, responseHandler);
+            System.out.println("----------------------------------------");
+            System.out.println(responseBody);
+            System.out.println("----------------------------------------");
         }
-        return name;
     }
 }
 

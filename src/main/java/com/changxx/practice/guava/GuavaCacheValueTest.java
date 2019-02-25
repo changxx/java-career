@@ -13,12 +13,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * GuavaCacheTest
+ * GuavaCacheValueTest
  *
  * @author changxiangxiang
  * @date 2017/9/29
  */
-public class GuavaCacheTest {
+public class GuavaCacheValueTest {
 
     @Test
     public void test() {
