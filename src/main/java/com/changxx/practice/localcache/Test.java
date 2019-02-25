@@ -1,5 +1,8 @@
 package com.changxx.practice.localcache;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Test {
 
     public Cache<String, UserInfo> cache = CacheBuilder.newBuilder().setExpireAfterWrite(2000L * 60 * 5).build(new CacheLoader<String, UserInfo>() {
@@ -43,23 +46,39 @@ public class Test {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Test test = new Test();
+        Thread.sleep(10000);
+        System.out.println("+++++++++++++++++++++++++");
+        final Test test = new Test();
+        List<Thread> list = new ArrayList<Thread>();
         for (int i = 0; i < 100; i++) {
             Thread thread = new Thread(new Runnable() {
                 public void run() {
                     for (int i = 0; i < 4; i++) {
-                        UserInfo.cache.get("sdfs" + i);
+                        test.getUserInfoFromCacheById("user" + i);
                     }
                 }
             });
+            list.add(thread);
+        }
+        System.out.println("start+++++++++++++++++++++++++");
+        for (Thread thread : list) {
             thread.start();
         }
+        System.out.println("start-----------------------------");
+
+//        for (int i = 0; i < 4; i++) {
+//            test.getUserInfoFromCacheById("user" + i);
+//        }
 
         Thread.sleep(300);
 
+        System.out.println("sleep+++++++++++++++++++++++++");
+
         for (int i = 2; i > 0; i--) {
-            System.out.println(UserInfo.cache.getIfPersent("sdfs" + i));
+            System.out.println(test.cache.getIfPersent("user" + i));
         }
+
+        System.out.println("end+++++++++++++++++++++++++");
     }
 
 }

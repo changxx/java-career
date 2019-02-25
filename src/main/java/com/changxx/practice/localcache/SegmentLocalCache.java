@@ -28,7 +28,6 @@ public class SegmentLocalCache<K, V> extends AbstractCache<K, V> {
             segment = new Segment<K, CacheValue<V>>();
             segments[Math.abs(key.hashCode() % segNum)] = segment;
         }
-        System.out.println("put+++++ " + " key=" + key + ", value=" + cacheValue.get());
         segment.setVal(key, cacheValue);
     }
 
@@ -47,7 +46,6 @@ public class SegmentLocalCache<K, V> extends AbstractCache<K, V> {
 
         public V getVal(K k) {
             try {
-                System.out.println("get++ key=" + k);
                 readWriteLock.readLock();
                 return segMap.get(k);
             } catch (InterruptedException e) {
