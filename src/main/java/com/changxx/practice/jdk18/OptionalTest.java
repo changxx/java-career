@@ -1,11 +1,36 @@
 package com.changxx.practice.jdk18;
 
+import com.changxx.practice.thread.threadLocal.Student;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OptionalTest {
+
+    @Test
+    public void sort() throws IOException {
+        List<User> userList = new ArrayList<>();
+        userList.add(new User(1, "u1"));
+        userList.add(new User(2, "u2"));
+
+        // 倒序
+        userList.sort((o1, o2) -> o2.getId() - o1.getId());
+
+        userList.forEach(o -> {
+            System.out.println(o.getId());
+        });
+    }
+
+    @Test
+    public void listMap() {
+        List<Student> studentList = new ArrayList<>();
+        Map<String, List<Student>> group = studentList.stream().collect(Collectors.groupingBy(Student::getName));
+    }
 
     @Test
     public void test() throws IOException {
@@ -32,8 +57,7 @@ public class OptionalTest {
     }
 
     /**
-     * 如果我们创建的Optional对象中有值存在则返回此值，如果没有值存在，则会抛出
-     * NoSuchElementException异常
+     * 如果我们创建的Optional对象中有值存在则返回此值，如果没有值存在，则会抛出 NoSuchElementException异常
      */
     @Test
     public void get() throws IOException {
@@ -114,8 +138,7 @@ public class OptionalTest {
     }
 
     /**
-     * 如果创建的Optional中的值存在，就对该值执行提供的Function函数调用，返回一个Optional类型的值，否
-     * 则就返回一个空的Optional对象.flatMap与map（Funtion）方法类似，区别在于flatMap中的mapper返回
+     * 如果创建的Optional中的值存在，就对该值执行提供的Function函数调用，返回一个Optional类型的值，否 则就返回一个空的Optional对象.flatMap与map（Funtion）方法类似，区别在于flatMap中的mapper返回
      * 值必须是Optional，map方法的mapping函数返回值可以是任何类型T。调用结束时，flatMap不会对结果用Optional封装。
      */
     @Test
